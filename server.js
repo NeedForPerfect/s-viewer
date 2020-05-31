@@ -12,7 +12,7 @@ app.get('/*', function(req,res) {
 res.sendFile(path.join(__dirname+'/dist/s-viewer/index.html'));
 });
 
-console.log('app works');
+console.log('app works on port: ', process.env.PORT || 8080);
 
 // Start the app by listening on the default Heroku port
-app.listen(8080);
+app.listen(process.env.PORT || 8080);
