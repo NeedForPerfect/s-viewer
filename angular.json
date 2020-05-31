@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "s-viewer"
+    }
+  },
+  "defaultProject": "s-viewer",
+  "cli": {
+    "analytics": false
+  }
 }
