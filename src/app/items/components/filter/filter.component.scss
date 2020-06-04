@@ -1,0 +1,52 @@
+@import "../../../../styles/variables.scss";
+
+.filter-wrapper {
+	.filters {
+		height: 40px;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		.item-types {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			margin-right: 15px;
+			.item-type {
+				font-weight: 500;
+				height: 25px;
+				color: $light-gray-1;
+				margin-right: 20px;
+				&.active {
+					border-bottom: 2px solid $violet-background;
+					color: $dark-gray;
+				}
+			}
+		}
+		.search-form {
+			width: 100%;
+			input {
+				width: 100%;
+				height: 30px;
+				border: 1px solid $light-gray-2;
+				border-radius: 15px;
+				box-sizing: border-box;
+			}
+		}
+		@media (max-width: 576px) {
+			flex-direction: column;
+			margin-top: 30px;
+			width: 90%;
+			margin-left: auto;
+			margin-right: auto;
+			.item-types {
+				width: 100%;
+				margin: 0;
+				margin-bottom: 15px;
+				justify-content: space-between;
+				.item-type {
+					margin: 0;
+				}
+			}
+		}
+	}
+}
