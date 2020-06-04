@@ -53,7 +53,7 @@ $item-border-radius: 10px;
 				p.item-value {
 					margin-bottom: 0;
 					font-size: 14px;
-					font-weight: 500;
+					font-weight: 400;
 					line-height: 14px;
 				}
 			}
@@ -74,4 +74,9 @@ $item-border-radius: 10px;
 		flex: auto;
 		width: 100%;
 	}
+}
+
+
+.chart-icon {
+	margin-left: -4px;
 }
