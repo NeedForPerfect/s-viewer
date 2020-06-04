@@ -13,4 +13,9 @@
     @media (min-width: 1200px) {
         max-width: 1140px;
     }
+    .app-content {
+        @media (max-width: 760px) {
+            padding: 0 15px;
+        }   
+    }
 }
