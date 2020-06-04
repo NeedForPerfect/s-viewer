@@ -2,7 +2,7 @@
 
 :host {
 	height: 180px;
-	flex: 1 1 20%;
+	flex: 1 1 24%;
 	padding: 5px;
 	.item {
 		padding-left: 25px;
@@ -13,10 +13,16 @@
 		background-color: $light-gray-4;
 		height: 100%;
 	}
+	@media (max-width: 991px) {
+		flex: auto;
+		width: 31%;
+	}
 	@media (max-width: 768px) {
-		flex: 1 1 48%;
+		flex: auto;
+		width: 48%;
 	}
 	@media (max-width: 576px) {
-		flex: 1 1 100%;
-}
+		flex: auto;
+		width: 100%;
+	}
 }

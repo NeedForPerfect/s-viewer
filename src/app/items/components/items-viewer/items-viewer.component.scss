@@ -1,8 +1,10 @@
 .items-wrapper {
-  margin-top: 30px;
 	display: flex;
   flex-wrap: wrap;
+  width: 100%;
   list-style: none;
-  margin: 0;
-  padding-top: 30px;
+  &::after {
+    content: '';
+    flex-grow: 1000000000;
+  }
 }
