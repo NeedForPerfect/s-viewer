@@ -1,38 +1,65 @@
 @import "../../../../styles/variables.scss";
 
+$item-border-radius: 10px;
+
 :host {
-	height: 180px;
+	height: 160px;
 	flex: 1 1 24%;
 	padding: 5px;
 	.item {
-		padding-left: 25px;
 		display: flex;
-		justify-content: space-around;
+		justify-content: space-between;
 		flex-direction: column;
-		border-radius: 10px;
+		border-radius: $item-border-radius;
 		background-color: $light-gray-4;
 		height: 100%;
-		.item-weight {
+		.item-header {
+			padding: 10px;
+			border-top-left-radius: $item-border-radius;
+			border-top-right-radius: $item-border-radius;
+			background-color: $light-gray-3;
+			height: 40px;
+			p {
+				margin-bottom: 0;
+				line-height: 18px;
+			}
+			.item-id {
+				font-size: 18px;
+				font-weight: 500;
+			}
+			.item-description {
+				font-size: 14px;
+				font-weight: normal;
+			}
+		}
+		.item-info-wrapper {
+			padding: 10px;
 			display: flex;
 			justify-content: flex-start;
-			align-items: start;
+			align-items: center;
+			height: 60px;
+			border-bottom: 1px solid $light-gray-3;
 			img {
 				margin-right: 5px;
+				margin-top: -4px;
 			}
-			.weight-info {
-				p.weight-title {
+			.item-info {
+				p.item-title {
 					margin-bottom: 0;
 					font-size: 10px;
 					font-weight: 400;
 					color: $light-gray
 				}
-				p.weight-value {
+				p.item-value {
 					margin-bottom: 0;
 					font-size: 14px;
 					font-weight: 500;
 					line-height: 14px;
 				}
 			}
+		}
+		.item-location {
+			height: 60px;
 		}
 	}
 	@media (max-width: 991px) {
