@@ -1,0 +1,43 @@
+@for $j from 5 to 11 {
+	.w-#{$j*10} {
+		width: 10% * $j;
+	} 
+} // w-100 // w-50 classes like bootstrap
+
+.h-100 {
+	height: 100%;
+}
+
+.user-select-none {
+user-select: none;
+}
+
+.cursor-pointer, .c-poiner {
+cursor: pointer;
+}
+
+.center-both {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.vertical-center {
+	display: flex;
+	align-items: center;
+}
+
+.horizontal-center {
+display: flex;
+justify-content: center;
+}
+
+.horizontal-left {
+display: flex;
+justify-content: flex-start;
+}
+
+.horizontal-right {
+display: flex;
+justify-content: flex-end;
+}
