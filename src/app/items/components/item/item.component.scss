@@ -1,0 +1,22 @@
+@import "../../../../styles/variables.scss";
+
+:host {
+	height: 180px;
+	flex: 1 1 20%;
+	padding: 5px;
+	.item {
+		padding-left: 25px;
+		display: flex;
+		justify-content: space-around;
+		flex-direction: column;
+		border-radius: 25px;
+		background-color: $light-gray-4;
+		height: 100%;
+	}
+	@media (max-width: 768px) {
+		flex: 1 1 48%;
+	}
+	@media (max-width: 576px) {
+		flex: 1 1 100%;
+}
+}

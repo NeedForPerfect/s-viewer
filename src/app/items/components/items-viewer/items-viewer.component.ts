@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemsViewerComponent implements OnInit {
 
+  items = new Array(25).fill(null);
+
   constructor() { }
 
   ngOnInit(): void {
