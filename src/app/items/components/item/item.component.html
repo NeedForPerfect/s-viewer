@@ -1,20 +1,21 @@
 <div class="item">
 	<div class="item-header">
-		<p class="item-id">Item ID</p>
-		<p class="item-description">HIGH GRADE ALUMINIUM</p>
+		<p class="item-id">{{ item?.number }}</p>
+		<p class="item-description">{{ item?.commodity }}
+		</p>
 	</div>
 	<div class="item-info-wrapper">
 		<img class="chart-icon" src="assets/images/chart-icon.svg" alt="">
 		<div class="item-info">
 			<p class="item-title">NEW WEIGHT</p>
-			<p class="item-value">5.20T</p>
+			<p class="item-value">{{ item?.netWeightLBS }} T</p>
 		</div>
 	</div>
 	<div class="item-info-wrapper location">
 		<img src="assets/images/location.svg" alt="">
 		<div class="item-info">
-			<p class="item-title">LME WAREHOUSE ADDRESS</p>
-			<p class="item-value">4300 Jourdan Rd New Orleans, LA</p>
+			<p class="item-title">{{ item?.warehousekeeper }}</p>
+			<p class="item-value">{{ item?.port }}</p>
 		</div>
 	</div>
 </div>
