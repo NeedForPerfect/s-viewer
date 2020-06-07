@@ -28,7 +28,8 @@ export class FilterComponent implements OnInit {
   }
 
   onPage(page: PageEvent) {
-    this.store.dispatch(ApiGetItems()({request: { count: 48, page: page.pageIndex }}))
+    console.log(page.pageIndex)
+    this.store.dispatch(ApiGetItems()({request: { count: 48, page: (page.pageIndex + 1) }}))
   }
 
 }

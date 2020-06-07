@@ -27,7 +27,7 @@ export class ItemsViewerComponent implements OnInit {
       this.items = store.itemsState.items;
       this.loading = store.itemsState.loading;
     }));
-    this.store.dispatch(ApiGetItems()({ request: { count: 48, page: 3 } }))
+    this.store.dispatch(ApiGetItems()({ request: { count: 48, page: 1 } }))
   }
 
   ngOnDestroy() {
