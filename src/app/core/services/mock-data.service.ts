@@ -11,6 +11,11 @@ export interface ItemsResponce<T> {
   page: number;
 }
 
+export interface ItemsRequest {
+  page: number;
+  count: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,7 +32,8 @@ export class MockDataService {
         items: items.slice(from, to),
         totalCount,
         count,
-        page
+        page,
+
       };
     }), delay(1500));
   }

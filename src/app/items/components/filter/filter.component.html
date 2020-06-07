@@ -27,7 +27,7 @@
 					<img src="assets/images/three-dots-icon.svg" alt="">
 				</div>
 			</div>
-			
+
 		</div>
 		<div class="info-block">
 			<img src="assets/images/statistic-icon.svg" alt="">
@@ -37,4 +37,6 @@
 			</div>
 		</div>
 	</div>
+	<mat-paginator class="paginator" (page)="onPage($event)" [length]="totalItems" [hidePageSize]="true" [pageSize]="itemsPerPage">
+	</mat-paginator>
 </div>

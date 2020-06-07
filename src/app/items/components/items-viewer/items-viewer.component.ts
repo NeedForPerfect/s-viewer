@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MockDataService, ItemsResponce } from 'src/app/core/services/mock-data.service';
-import { CoffeItem } from 'src/app/core/models/item.model';
+import { CoffeItem, Item } from 'src/app/core/models/item.model';
 import { map } from 'rxjs/operators';
+import { ItemsState } from 'src/app/core/store/reducer';
+import { Store } from '@ngrx/store';
+import { ApiGetItems } from 'src/app/core/store/actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-items-viewer',
@@ -10,16 +14,24 @@ import { map } from 'rxjs/operators';
 })
 export class ItemsViewerComponent implements OnInit {
 
-  items: CoffeItem[] = [];
+  items: Item[] = [];
+  loading = false;
+  subscribtions = new Subscription();
 
   constructor(
-    private mockDataService: MockDataService
+    private store: Store<{ itemsState: ItemsState }>
   ) { }
 
   ngOnInit(): void {
-    this.mockDataService.getCoffeeItems(48, 2, 'COFFEE').subscribe((res: ItemsResponce<CoffeItem>) => {
-      this.items = res.items;
-    });
+    this.subscribtions.add(this.store.subscribe(store => {
+      this.items = store.itemsState.items;
+      this.loading = store.itemsState.loading;
+    }));
+    this.store.dispatch(ApiGetItems()({ request: { count: 48, page: 3 } }))
+  }
+
+  ngOnDestroy() {
+    this.subscribtions.unsubscribe();
   }
 
 }
