@@ -12,9 +12,16 @@ export interface Item { // Basic Items types
 	shed: string;
 	rentPaidDate: string;
 	rentExpiryDate: string;
-	netWeightLBS: string;
 }
 
 export interface CoffeItem extends Item { // specific for COFFEE properties
 	noOfBags: string;
+	netWeightLBS: string;
 }
+
+export interface CocoaItem extends Item { // specific for COFFEE properties
+	noOfBags: string;
+	netWeightKG: string;
+}
+
+export type ItemUI = (CoffeItem & CocoaItem);

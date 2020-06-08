@@ -94,5 +94,13 @@
 		position: absolute;
 		bottom: 0px;
 		right: 0px;
+		background: transparent;
+	}
+}
+
+
+:host ::ng-deep {
+	mat-form-field {
+
 	}
 }

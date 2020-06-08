@@ -15,6 +15,14 @@
 			<input type="text">
 		</div>
 	</div>
+	<div class="items-filter" [formGroup]="filterForm">
+		<mat-form-field>
+			<mat-label>Select Item Type</mat-label>
+			<mat-select formControlName="itemsType">
+				<mat-option *ngFor="let topping of itemTypes" [value]="topping">{{topping}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
 	<div class="total-filtered">
 		<div class="info-block number-of-items">
 			<img src="assets/images/items-icon.svg" alt="">
@@ -27,7 +35,6 @@
 					<img src="assets/images/three-dots-icon.svg" alt="">
 				</div>
 			</div>
-
 		</div>
 		<div class="info-block">
 			<img src="assets/images/statistic-icon.svg" alt="">
@@ -37,6 +44,6 @@
 			</div>
 		</div>
 	</div>
-	<mat-paginator class="paginator" (page)="onPage($event)" [length]="totalItems" [hidePageSize]="true" [pageSize]="itemsPerPage">
+	<mat-paginator class="paginator" (page)="onPage($event)" [length]="totalItems" [pageIndex]="currentPageIndex" [hidePageSize]="true" [pageSize]="itemsPerPage">
 	</mat-paginator>
 </div>

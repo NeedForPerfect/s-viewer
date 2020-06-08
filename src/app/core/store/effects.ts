@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { ApiGetItemsSuccess, ApiGetItems } from './actions';
 import { Store } from '@ngrx/store';
 import { ItemsState } from './reducer';
@@ -10,13 +10,15 @@ import { MockDataService, ItemsRequest, ItemsResponce } from '../services/mock-d
 @Injectable()
 export class ItemsEffects {
  
-  loadSuppliers$ = createEffect(() => this.actions$.pipe(
+  loadItems$ = createEffect(() => this.actions$.pipe(
     ofType(ApiGetItems()),
-    mergeMap((action: { request: ItemsRequest }) => {
-			const {page, count} = action.request;
-      return this.mockData.getCoffeeItems(count, page)
+    withLatestFrom(this.store.select(state => state.itemsState.itemsQuery)),
+    mergeMap((filterValue: [ {request: ItemsRequest} , ItemsRequest]) => {
+      const [action, lastFilterValue] = filterValue;
+      const request = { ...lastFilterValue, ...action.request };
+      return this.mockData.getItems(request)
       .pipe(
-        map( (res: ItemsResponce<any>) => { 
+        map( (res: ItemsResponce<any>) => {
           return ApiGetItemsSuccess()({ responce: res })
          }),
        // catchError(() => of(ApiError()()))

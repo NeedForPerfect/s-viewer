@@ -8,6 +8,11 @@ import { ItemsViewerComponent } from './components/items-viewer/items-viewer.com
 import { ItemComponent } from './components/item/item.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import {MatSelectModule} from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [RootComponent, FilterComponent, ItemsViewerComponent, ItemComponent],
@@ -15,7 +20,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     CommonModule,
     ItemsRoutingModule,
     MatPaginatorModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    ReactiveFormsModule
   ]
 })
 export class ItemsModule { }

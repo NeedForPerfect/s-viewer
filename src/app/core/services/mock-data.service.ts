@@ -2,18 +2,22 @@ import { Injectable } from '@angular/core';
 import { mockData } from './mock-data';
 import { of, Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
-import { CoffeItem } from '../models/item.model';
+import { ItemUI } from '../models/item.model';
 
 export interface ItemsResponce<T> {
   items: T[];
-  totalCount: number;
+  total: number;
   count: number;
   page: number;
 }
 
 export interface ItemsRequest {
-  page: number;
-  count: number;
+  page?: number;
+  count?: number;
+  itemsType?: string;
+  countries?: string[];
+  ports?: string[];
+  itemTypes?: string;
 }
 
 @Injectable({
@@ -23,19 +27,20 @@ export class MockDataService {
 
   constructor() { }
 
-  getCoffeeItems(count: number = 10, page: number = 1, itemsType: string = 'COFFEE'): Observable<ItemsResponce<CoffeItem>> {
-    return of(mockData[itemsType]).pipe(map((items: CoffeItem[]) => {
+  getItems(itemsRequest: ItemsRequest): Observable<ItemsResponce<ItemUI>> {
+    const { count, page, itemsType } = itemsRequest;
+    console.log(itemsRequest);
+    return of(mockData[itemsType]).pipe(map((items: ItemUI[]) => {
       const to = count * page;
       const from = to - count;
-      const totalCount = items.length;
+      const total = items.length;
       return {
         items: items.slice(from, to),
-        totalCount,
+        total,
         count,
-        page,
-
+        page
       };
-    }), delay(1500));
+    }), delay(300));
   }
 
 }

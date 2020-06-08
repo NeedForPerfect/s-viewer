@@ -1,37 +1,36 @@
-import { Item } from '../models/item.model';
+import { Item, ItemUI } from '../models/item.model';
 import { createReducer, on, Action } from '@ngrx/store';
 import { ApiGetItems, ApiGetItemsSuccess } from './actions';
-import { ItemsResponce } from '../services/mock-data.service';
+import { ItemsResponce, ItemsRequest } from '../services/mock-data.service';
 
 export interface ItemsState {
   error?: any;
-  items?: Item[];
+  items?: ItemUI[];
   selectedItems?: Item[];
-  currentPage: number;
-  totalItems: number;
-  itemsPerPage: number;
   loading?: boolean;
+  total: number;
+  itemsQuery: ItemsRequest;
 }
 
 const initialState: ItemsState = {
   error: null,
   items: [],
   selectedItems: [],
-  currentPage: 1,
-  totalItems: 0,
-  itemsPerPage: 48,
-  loading: false
+  loading: false,
+  total: 0,
+  itemsQuery: null
 };
 
 export const suppliersReducer = createReducer(
   initialState,
-  on(ApiGetItems(), (state, action) => ({ ...state, loading: true })),
+  on(ApiGetItems(), (state, action) => {
+    return { ...state, itemsQuery: { ...state.itemsQuery, ...action.request }, loading: true };
+  }),
   on(ApiGetItemsSuccess(), (state, action: { responce: ItemsResponce<any> }) => 
   ({ 
     ...state,
     items: action.responce.items,
-    totalItems: action.responce.totalCount,
-    itemsPerPage: action.responce.count,
+    total: action.responce.total,
     loading: false 
   }))
 );

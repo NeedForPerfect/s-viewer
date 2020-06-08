@@ -8,6 +8,15 @@ $item-border-radius: 10px;
 	padding: 5px;
 	box-sizing: border-box;
 	transition: 0.15s;
+	&:nth-child(1) {
+		padding-left: 0;		
+	}
+	&:nth-child(4n) {
+		padding-right : 0;		
+	}
+	&:nth-child(5n) {
+		padding-left : 0;		
+	}
 	&:hover {
 		margin-top: -3px;
 		cursor: pointer;
@@ -75,14 +84,34 @@ $item-border-radius: 10px;
 	@media (max-width: 991px) {
 		flex: auto;
 		width: 33%;
+		&:nth-child(1) {
+			padding-left: 0;		
+		}
+		&:nth-child(3n) {
+			padding-right : 0;		
+		}
+		&:nth-child(4n) {
+			padding-left : 0;		
+		}
 	}
 	@media (max-width: 768px) {
 		flex: auto;
 		width: 50%;
+		&:nth-child(1) {
+			padding-left: 0;		
+		}
+		&:nth-child(2n) {
+			padding-right : 0;		
+		}
+		&:nth-child(3n) {
+			padding-left : 0;		
+		}
 	}
 	@media (max-width: 576px) {
 		flex: auto;
 		width: 100%;
+		padding-left: 0px;
+		padding-right: 0px;
 	}
 }
 
