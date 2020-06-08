@@ -29,7 +29,6 @@ export class MockDataService {
 
   getItems(itemsRequest: ItemsRequest): Observable<ItemsResponce<ItemUI>> {
     const { count, page, itemsType } = itemsRequest;
-    console.log(itemsRequest);
     return of(mockData[itemsType]).pipe(map((items: ItemUI[]) => {
       const to = count * page;
       const from = to - count;

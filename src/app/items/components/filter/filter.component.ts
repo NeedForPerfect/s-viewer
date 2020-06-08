@@ -68,10 +68,13 @@ export class FilterComponent implements OnInit {
   ngOnInit(): void {
     this.subscribtions.add(this.store.subscribe((state: { itemsState: ItemsState }) => {
       if (state.itemsState.itemsQuery) {
+        this.currentPageIndex = state.itemsState.itemsQuery.page - 1;
         this.totalItems = state.itemsState.total;
         this.itemsPerPage = state.itemsState.itemsQuery.count;
       }
     }));
+    this.store.dispatch(ApiGetItems()({ request: { } }));
+    // this will get items by latest params
     this.initFilterForm();
   }
 

@@ -18,7 +18,11 @@ const initialState: ItemsState = {
   selectedItems: [],
   loading: false,
   total: 0,
-  itemsQuery: null
+  itemsQuery: {
+    itemsType: 'COFFEE',
+    page: 1,
+    count: 25
+  }
 };
 
 export const suppliersReducer = createReducer(
