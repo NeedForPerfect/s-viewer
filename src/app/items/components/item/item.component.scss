@@ -18,8 +18,8 @@ $item-border-radius: 10px;
 		padding-left : 0;		
 	}
 	&:hover {
-		margin-top: -3px;
-		cursor: pointer;
+		// margin-top: -3px;
+		// cursor: pointer;
 		.item {
 			box-shadow: 0px 1px 9px -5px rgba(0, 0, 0, 0.5);
 		}
@@ -43,6 +43,9 @@ $item-border-radius: 10px;
 				color: $dark-gray;
 			}
 			.item-id {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
 				font-size: 18px;
 				font-weight: 500;
 			}

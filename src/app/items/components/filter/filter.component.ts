@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { ItemsState } from 'src/app/core/store/reducer';
 import { ApiGetItems } from 'src/app/core/store/actions';
 import { Subscription } from 'rxjs';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, NumberValueAccessor } from '@angular/forms';
 import { ItemsRequest } from 'src/app/core/services/mock-data.service';
 
 export interface FilterFormValue {
@@ -25,6 +25,9 @@ export class FilterComponent implements OnInit {
   itemsPerPage: number = 25;
   currentPageIndex: number = 0;
   filterForm: FormGroup;
+
+  totalSelectedItems: number = 0;
+  totalTonage: number;
 
   itemTypes = [
     'COFFEE',
@@ -76,6 +79,9 @@ export class FilterComponent implements OnInit {
         this.currentPageIndex = state.itemsState.itemsQuery.page - 1;
         this.totalItems = state.itemsState.total;
         this.itemsPerPage = state.itemsState.itemsQuery.count;
+      }
+      if (state.itemsState.selectedItems.length) {
+        this.totalSelectedItems = state.itemsState.selectedItems.length;
       }
     }));
     this.store.dispatch(ApiGetItems()({ request: { } }));

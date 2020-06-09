@@ -24,4 +24,4 @@ export interface CocoaItem extends Item { // specific for COFFEE properties
 	netWeightKG: string;
 }
 
-export type ItemUI = (CoffeItem & CocoaItem);
+export type ItemUI = (CoffeItem & CocoaItem & { selected: boolean });

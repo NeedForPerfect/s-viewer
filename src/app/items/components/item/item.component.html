@@ -1,6 +1,9 @@
 <div class="item">
 	<div class="item-header">
-		<p class="item-id">{{ item?.number }}</p>
+		<div class="item-id">
+			<p>{{ item?.number }}</p>
+			<mat-checkbox class="item-checkbox" [checked]="item?.selected" (change)="onChangeCheckbox($event)"></mat-checkbox>
+		</div>
 		<p class="item-description">{{ item?.commodity }}
 		</p>
 	</div>

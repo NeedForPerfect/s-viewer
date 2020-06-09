@@ -21,7 +21,13 @@ export class ItemsViewerComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribtions.add(this.store.subscribe(store => {
-      this.items = store.itemsState.items;
+      this.items = store.itemsState.items.map( i => {
+        if (store.itemsState.selectedItems.some( sI => sI.number === i.number )) {
+          return { ...i, selected: true }
+        } else {
+          return { ...i, selected: false }
+        }
+      });
       this.loading = store.itemsState.loading;
     }));
   }
