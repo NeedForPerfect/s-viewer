@@ -58,6 +58,13 @@ export class FilterComponent implements OnInit {
     this.subscribtions.add(this.filterForm.valueChanges.subscribe((val: FilterFormValue) => {
         this.onFilterItems(val);
     }));
+    this.subscribtions.add(
+      this.store.select(state => state.itemsState.itemsQuery).subscribe((itemsRequest: ItemsRequest) => {
+        this.filterForm.patchValue({
+          countries: itemsRequest.countries
+        }, {emitEvent: false})
+      })
+    )
   }
 
   onFilterItems(filterValue: FilterFormValue) {
