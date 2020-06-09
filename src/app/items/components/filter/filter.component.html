@@ -16,12 +16,21 @@
 		</div>
 	</div>
 	<div class="items-filter" [formGroup]="filterForm">
-		<mat-form-field>
-			<mat-label>Select Item Type</mat-label>
-			<mat-select formControlName="itemsType">
-				<mat-option *ngFor="let topping of itemTypes" [value]="topping">{{topping}}</mat-option>
-			</mat-select>
-		</mat-form-field>
+		<p class="filter-title">Filter Items</p>
+			<mat-form-field>
+				<mat-label>Select Item Type</mat-label>
+				<mat-select formControlName="itemsType">
+					<mat-option *ngFor="let type of itemTypes" [value]="type">{{type}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field class="countries-filter">
+				<mat-label>Filter by Countries</mat-label>
+				<mat-select multiple formControlName="countries">
+					<mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-paginator class="paginator" (page)="onPage($event)" [length]="totalItems" [pageIndex]="currentPageIndex" [hidePageSize]="true" [pageSize]="itemsPerPage">
+			</mat-paginator>
 	</div>
 	<div class="total-filtered">
 		<div class="info-block number-of-items">
@@ -44,6 +53,4 @@
 			</div>
 		</div>
 	</div>
-	<mat-paginator class="paginator" (page)="onPage($event)" [length]="totalItems" [pageIndex]="currentPageIndex" [hidePageSize]="true" [pageSize]="itemsPerPage">
-	</mat-paginator>
 </div>

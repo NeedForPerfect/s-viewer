@@ -17,7 +17,6 @@ export interface ItemsRequest {
   itemsType?: string;
   countries?: string[];
   ports?: string[];
-  itemTypes?: string;
 }
 
 @Injectable({
@@ -28,8 +27,14 @@ export class MockDataService {
   constructor() { }
 
   getItems(itemsRequest: ItemsRequest): Observable<ItemsResponce<ItemUI>> {
-    const { count, page, itemsType } = itemsRequest;
+    const { count, page, itemsType, countries } = itemsRequest;
     return of(mockData[itemsType]).pipe(map((items: ItemUI[]) => {
+      if (countries.length) {
+        return items.filter( i => countries.some(c => c.toLowerCase() === i.origin.toLowerCase()) );
+      } else {
+        return items;
+      }
+    }), map((items: ItemUI[]) => {
       const to = count * page;
       const from = to - count;
       const total = items.length;

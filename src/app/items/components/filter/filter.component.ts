@@ -25,12 +25,21 @@ export class FilterComponent implements OnInit {
   itemsPerPage: number = 25;
   currentPageIndex: number = 0;
   filterForm: FormGroup;
-  lastItemsType: string;
 
   itemTypes = [
     'COFFEE',
     'COCOA'
   ];
+
+  countries = [
+    'COLOMBIA',
+    'GUATEMALA',
+    'VIETNAM',
+    'PERU',
+    'UGANDA',
+    'MEXICO',
+    'OS_BRAZIL'
+  ]
 
   constructor(
     private store: Store<{ itemsState: ItemsState }>,
@@ -39,24 +48,20 @@ export class FilterComponent implements OnInit {
 
   initFilterForm() {
     this.filterForm = this.fb.group({
-      countries: [],
+      countries: '',
       ports: [],
-      itemsType: ''
+      itemsType: 'COFFEE'
     });
     this.subscribtions.add(this.filterForm.valueChanges.subscribe((val: FilterFormValue) => {
-      if (this.lastItemsType !== val.itemsType) {
-        this.onFilterItems(val, true);
-      }
+        this.onFilterItems(val);
     }));
   }
 
-  onFilterItems(filterValue: FilterFormValue, resetPaginator = false) {
-    let request: ItemsRequest = { itemsType: filterValue.itemsType }; // make form values the same with itemsQuery in STORE
-    if (resetPaginator) {
-      request.page = 1;
-      this.currentPageIndex = 0;
-      request.count = this.itemsPerPage; 
-    }
+  onFilterItems(filterValue: FilterFormValue) {
+    let request: ItemsRequest = { ...filterValue };
+    request.page = 1;
+    this.currentPageIndex = 0;
+    request.count = this.itemsPerPage; 
     this.store.dispatch(ApiGetItems()({ request }))
   }
 

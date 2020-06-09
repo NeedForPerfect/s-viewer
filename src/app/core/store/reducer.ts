@@ -20,6 +20,7 @@ const initialState: ItemsState = {
   total: 0,
   itemsQuery: {
     itemsType: 'COFFEE',
+    countries: [],
     page: 1,
     count: 25
   }

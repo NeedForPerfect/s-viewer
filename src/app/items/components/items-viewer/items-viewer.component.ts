@@ -4,8 +4,6 @@ import { ItemsState } from 'src/app/core/store/reducer';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
-
-
 @Component({
   selector: 'app-items-viewer',
   templateUrl: './items-viewer.component.html',
