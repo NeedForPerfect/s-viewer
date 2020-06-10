@@ -2,7 +2,7 @@
 	<div class="item-header">
 		<div class="item-id">
 			<p>{{ item?.number }}</p>
-			<mat-checkbox class="item-checkbox" [checked]="item?.selected" (change)="onChangeCheckbox($event)"></mat-checkbox>
+			<mat-checkbox *ngIf="!selectedMode" class="item-checkbox" [checked]="item?.selected" (change)="onChangeCheckbox($event)"></mat-checkbox>
 		</div>
 		<p class="item-description">{{ item?.commodity }}
 		</p>
@@ -11,7 +11,7 @@
 		<img class="chart-icon" src="assets/images/chart-icon.svg" alt="">
 		<div class="item-info">
 			<p class="item-title">NEW WEIGHT</p>
-			<p class="item-value">{{ item?.netWeightLBS }} T</p>
+			<p class="item-value">{{ item?.netWeightLBS }} KG</p>
 		</div>
 	</div>
 	<div class="item-info-wrapper location">

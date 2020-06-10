@@ -38,8 +38,13 @@ export class MockDataService {
       const to = count * page;
       const from = to - count;
       const total = items.length;
+      let itemsUI = items.slice(from, to);
+      if (itemsRequest.itemsType === 'COCOA') {
+        itemsUI = items.map(i => ({ ...i, netWeightLBS: i.netWeightKG }));
+      }
+      itemsUI = itemsUI.map(i => ({ ...i, netWeightLBS: (+i.netWeightLBS.replace(',', '').replace('.', '') / 1000).toFixed(2) }));
       return {
-        items: items.slice(from, to),
+        items: itemsUI,
         total,
         count,
         page

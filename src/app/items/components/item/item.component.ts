@@ -13,6 +13,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 export class ItemComponent implements OnInit {
 
   @Input('item') item: ItemUI;
+  @Input('selectedMode') selectedMode: boolean = false;
 
   constructor(
     private store: Store<{ itemsState: ItemsState }>

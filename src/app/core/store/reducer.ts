@@ -6,7 +6,7 @@ import { ItemsResponce, ItemsRequest } from '../services/mock-data.service';
 export interface ItemsState {
   error?: any;
   items?: ItemUI[];
-  selectedItems?: Item[];
+  selectedItems?: ItemUI[];
   loading?: boolean;
   total: number;
   itemsQuery: ItemsRequest;

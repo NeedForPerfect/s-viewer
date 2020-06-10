@@ -1,0 +1,10 @@
+.items-wrapper {
+	display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  list-style: none;
+  &::after {
+    content: '';
+    flex-grow: 1000000000;
+  }
+}

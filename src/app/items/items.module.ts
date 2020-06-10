@@ -13,10 +13,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ViewCalculatedDataBySelectedComponent } from './components/view-calculated-data-by-selected/view-calculated-data-by-selected.component';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
-  declarations: [RootComponent, FilterComponent, ItemsViewerComponent, ItemComponent],
+  declarations: [RootComponent, FilterComponent, ItemsViewerComponent, ItemComponent, ViewCalculatedDataBySelectedComponent],
   imports: [
     CommonModule,
     ItemsRoutingModule,
@@ -26,7 +28,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatRadioModule,
     MatSelectModule,
     ReactiveFormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatButtonModule
   ]
 })
 export class ItemsModule { }

@@ -6,6 +6,7 @@ import { ApiGetItems } from 'src/app/core/store/actions';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, NumberValueAccessor } from '@angular/forms';
 import { ItemsRequest } from 'src/app/core/services/mock-data.service';
+import { ItemUI } from 'src/app/core/models/item.model';
 
 export interface FilterFormValue {
   countries: string[],
@@ -27,7 +28,7 @@ export class FilterComponent implements OnInit {
   filterForm: FormGroup;
 
   totalSelectedItems: number = 0;
-  totalTonage: number;
+  totalTonage: number = 0;
 
   itemTypes = [
     'COFFEE',
@@ -89,6 +90,10 @@ export class FilterComponent implements OnInit {
       }
       if (state.itemsState.selectedItems.length) {
         this.totalSelectedItems = state.itemsState.selectedItems.length;
+        const totalTonage = state.itemsState.selectedItems.reduce((acc: number, curr: ItemUI) => {
+          return acc + +curr.netWeightLBS;
+        }, 0)
+        this.totalTonage = +totalTonage.toFixed(3);
       }
     }));
     this.store.dispatch(ApiGetItems()({ request: { } }));

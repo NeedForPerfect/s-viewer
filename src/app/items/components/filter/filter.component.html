@@ -41,7 +41,12 @@
 					<p class="value">{{ totalSelectedItems }}</p>
 				</div>
 				<div>
-					<img src="assets/images/three-dots-icon.svg" alt="">
+					<button class="show-selected-button" routerLink="show-selected" mat-mini-fab color="primary">
+						<span class="material-icons">
+							remove_red_eye
+							</span>
+					</button>
+					<!-- <img src="assets/images/three-dots-icon.svg" alt=""> -->
 				</div>
 			</div>
 		</div>
@@ -49,7 +54,7 @@
 			<img src="assets/images/statistic-icon.svg" alt="">
 			<div class="info-text">
 				<p class="title">TOTAL NET WEIGHT</p>
-				<p class="value">984.71 MT</p>
+				<p class="value"> {{ totalTonage }} T</p>
 			</div>
 		</div>
 	</div>
