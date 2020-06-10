@@ -41,6 +41,7 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
       chart.data = [];
       // Add and configure Series
       let pieSeries = chart.series.push(new am4charts.PieSeries());
+      pieSeries.labels.template.text = "{category} {value} T"
       pieSeries.dataFields.value = "T";
       pieSeries.dataFields.category = "country";
       this.chart = chart;
@@ -78,35 +79,5 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
       this.cd.detectChanges();
     }));
   }
-
-
-  // {
-  //   "country": "Lithuania",
-  //   "litres": 501.9
-  // }, {
-  //   "country": "Czech Republic",
-  //   "litres": 301.9
-  // }, {
-  //   "country": "Ireland",
-  //   "litres": 201.1
-  // }, {
-  //   "country": "Germany",
-  //   "litres": 165.8
-  // }, {
-  //   "country": "Australia",
-  //   "litres": 139.9
-  // }, {
-  //   "country": "Austria",
-  //   "litres": 128.3
-  // }, {
-  //   "country": "UK",
-  //   "litres": 99
-  // }, {
-  //   "country": "Belgium",
-  //   "litres": 60
-  // }, {
-  //   "country": "The Netherlands",
-  //   "litres": 50
-  // }
 
 }
