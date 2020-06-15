@@ -160,7 +160,7 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
     var pieSeries = pieChart.series.push(new am4charts.PieSeries());
     pieSeries.dataFields.value = "value";
     pieSeries.dataFields.category = "category";
-    pieSeries.data = [{ value: 100, category: "First" }, { value: 20, category: "Second" }, { value: 10, category: "Third" }];
+    pieSeries.data = [{ value: 100, category: "First port" }, { value: 20, category: "Second port" }, { value: 10, category: "Third port" }];
     this.mapPieChart = pieChart;
 
     var dropShadowFilter = new am4core.DropShadowFilter();
