@@ -46,9 +46,7 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
   ngAfterViewInit() {
     this.zone.runOutsideAngular(() => {
 
-      setTimeout(() => {
-        this.initMapChart();
-      }, 1500);
+      this.initMapChart();
 
       let chart = am4core.create(this.chartViewPort.nativeElement, am4charts.PieChart);
       // Add data
@@ -96,8 +94,6 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
 
 
   initMapChart() {
-
-    console.log('I work');
 
     this.mapChart = am4core.create(this.mapChartViewPort.nativeElement, am4maps.MapChart);
 
