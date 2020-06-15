@@ -209,7 +209,7 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
 
     countryLabel.hiddenState.properties.dy = 1000;
     countryLabel.defaultState.properties.dy = 0;
-    countryLabel.valign = "middle";
+    countryLabel.valign = "bottom";
     countryLabel.align = "right";
     countryLabel.paddingRight = 50;
     countryLabel.hide(0);
