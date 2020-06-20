@@ -2,8 +2,7 @@
 	<div class="item-header">
 		<div class="item-id">
 			<p>{{ item?.number }}</p>
-			<!-- <mat-checkbox *ngIf="!selectedMode" class="item-checkbox" [checked]="item?.selected" (change)="onChangeCheckbox($event)"></mat-checkbox> -->
-			<span (click)="onChangeCheckbox(!item?.selected)">selected {{ item?.selected }}</span>
+			<mat-checkbox *ngIf="!selectedMode" class="item-checkbox" [checked]="item?.selected" (change)="onChangeCheckbox($event)"></mat-checkbox>
 		</div>
 		<p class="item-description">{{ item?.commodity }}
 		</p>
