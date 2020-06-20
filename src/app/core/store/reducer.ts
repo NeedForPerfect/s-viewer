@@ -35,7 +35,7 @@ export const suppliersReducer = createReducer(
   on(ApiGetItemsSuccess(), (state, action: { responce: ItemsResponce<any> }) => 
   ({ 
     ...state,
-    items: action.responce.items,
+    items: action.responce.items.map(item => ({...item, selected: false})),
     total: action.responce.total,
     loading: false 
   })),

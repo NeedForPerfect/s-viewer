@@ -7,6 +7,7 @@ import {
 } from './actions';
 import { ItemsReducer } from './reducer';
 import { ItemsEffects } from './effects';
+import { getSelected, getShownItems } from './selectors';
 
 export const rootStore = {
 	ApiGetItems,
@@ -15,5 +16,7 @@ export const rootStore = {
 	SelectRemoveItem,
 	SelectClearSelected,
 	ItemsReducer,
-	ItemsEffects
+	ItemsEffects,
+	getSelected,
+	getShownItems
 };

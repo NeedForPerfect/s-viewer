@@ -21,19 +21,27 @@ export class ItemsViewerComponent implements OnInit {
     private cd: ChangeDetectorRef
   ) { }
 
-  ngOnInit(): void {                                       // TO DO
-    this.subscribtions.add(this.store.subscribe(store => { // separate subscribtions for all items and selected and 
-                                                           // change state of selected item by ViewChildren and call method.  Do not subscribe store in each item.
-      this.items = store.itemsState.items.map( i => {
-        if (store.itemsState.selectedItems.some( sI => sI.number === i.number )) {
-          return { ...i, selected: true }
-        } else {
-          return { ...i, selected: false }
-        }
-      });
-      this.loading = store.itemsState.loading;
+  ngOnInit(): void {
+    this.subscribtions.add(this.store.subscribe(({ itemsState }) => {
+      this.items = itemsState.items.map(d => ({...d}));
+      this.makrSelected(this.items, itemsState.selectedItems);
+      this.loading = itemsState.loading;
       this.cd.detectChanges();
     }));
+
+  }
+
+  makrSelected(shownItems, selected) {
+    if(shownItems.length) {
+      shownItems.forEach( (item: ItemUI, index) => {
+        if (selected.some(s => s.number === item.number)) {
+          this.items[index] = { ...this.items[index], selected: true };
+        } else {
+          this.items[index] = { ...this.items[index], selected: false };
+        }
+        this.cd.detectChanges();
+      });
+    }
   }
 
   ngOnDestroy() {

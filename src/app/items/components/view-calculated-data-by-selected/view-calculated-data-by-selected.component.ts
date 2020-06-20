@@ -117,7 +117,7 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
     var polygonSeries = this.mapChart.series.push(new am4maps.MapPolygonSeries());
     polygonSeries.useGeodata = true;
     // specify which countries to include
-    polygonSeries.include = ["IT", "CH", "FR", "DE", "GB", "ES", "PT", "IE", "NL", "LU", "BE", "AT", "DK"]
+    polygonSeries.include = ["IT", "CH", "FR", "DE", "GB", "ES"]
 
     // country area look and behavior
     var polygonTemplate = polygonSeries.mapPolygons.template;
@@ -142,6 +142,8 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
 
     // what to do when country is clicked
     polygonTemplate.events.on("hit", (event) => {
+
+      console.log('Event Click', event);
       event.target.zIndex = 1000000;
       this.selectPolygon(event.target);
     })
@@ -299,6 +301,7 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
   }
 
   zoomToCountry(polygon) {
+    console.log(polygon.dataItem.dataContext);
     var zoomAnimation = this.mapChart.zoomToMapObject(polygon, 2.2, true);
     if (zoomAnimation) {
       zoomAnimation.events.on("animationended", () => {
@@ -311,8 +314,10 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
   }
 
   showPieChart(polygon) {
+    console.log('Polygon', polygon);
     polygon.polygon.measure();
     var radius = polygon.polygon.measuredWidth / 2 * polygon.globalScale / this.mapChart.seriesContainer.scale;
+    this.mapPieSeries.data = [{ value: 100, category: "First port" }, { value: 98, category: "SSSecond port" }, { value: 10, category: "Third port" }];
     this.mapPieChart.width = radius * 2;
     this.mapPieChart.height = radius * 2;
     this.mapPieChart.radius = radius;
