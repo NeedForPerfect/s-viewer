@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator/paginator';
 import { Store } from '@ngrx/store';
 import { ItemsState } from 'src/app/core/store/reducer';
-import { ApiGetItems } from 'src/app/core/store/actions';
+import { ApiGetItems, MultipleSelectAddItems } from 'src/app/core/store/actions';
 import { Subscription } from 'rxjs';
-import { FormGroup, FormBuilder, NumberValueAccessor } from '@angular/forms';
+import { FormGroup, FormBuilder} from '@angular/forms';
 import { ItemsRequest } from 'src/app/core/services/mock-data.service';
 import { ItemUI } from 'src/app/core/models/item.model';
 
@@ -68,6 +68,10 @@ export class FilterComponent implements OnInit {
     )
   }
 
+  selectAll() {
+    this.store.dispatch(MultipleSelectAddItems()());
+  }
+
   onFilterItems(filterValue: FilterFormValue) {
     let request: ItemsRequest = { ...filterValue };
     request.page = 1;
@@ -94,6 +98,9 @@ export class FilterComponent implements OnInit {
           return acc + +curr.netWeightLBS;
         }, 0)
         this.totalTonage = +totalTonage.toFixed(3);
+      } else {
+        this.totalSelectedItems = 0;
+        this.totalTonage = 0;
       }
     }));
     this.store.dispatch(ApiGetItems()({ request: { } }));

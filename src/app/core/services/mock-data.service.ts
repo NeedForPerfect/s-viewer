@@ -30,7 +30,7 @@ export class MockDataService {
     const { count, page, itemsType, countries } = itemsRequest;
     return of(mockData[itemsType]).pipe(map((items: ItemUI[]) => {
       if (countries.length) {
-        return items.filter( i => countries.some(c => c.toLowerCase() === i.origin.toLowerCase()) );
+        return items.filter(i => countries.some(c => c.toLowerCase() === i.origin.toLowerCase()));
       } else {
         return items;
       }

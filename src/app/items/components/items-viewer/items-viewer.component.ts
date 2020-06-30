@@ -1,8 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ItemUI } from 'src/app/core/models/item.model';
 import { ItemsState } from 'src/app/core/store/reducer';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { getSelected, getShownItems } from 'src/app/core/store/selectors';
+import { filter, withLatestFrom } from 'rxjs/operators';
 
 @Component({
   selector: 'app-items-viewer',
@@ -22,26 +24,30 @@ export class ItemsViewerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.subscribtions.add(this.store.subscribe(({ itemsState }) => {
-      this.items = itemsState.items.map(d => ({...d}));
-      this.makrSelected(this.items, itemsState.selectedItems);
-      this.loading = itemsState.loading;
+    this.subscribtions.add(this.store.pipe(
+      select(getShownItems()),
+      filter(items => items.length),
+      withLatestFrom(this.store.pipe(select(getSelected())))
+    ).subscribe(([shownItems, selectedItems]) => {
+      this.items = shownItems.map(d => ({ ...d }));
+      this.loading = shownItems.loading;
       this.cd.detectChanges();
+
+      // const countriesByPorts = itemsState.selectedItems.reduce((acc: { [key: string]: string[] }, i: ItemUI) => {
+      //   if (!acc[i.origin]) {
+      //     return { ...acc, [i.origin]: [i.port] };
+      //   } else if (!acc[i.origin].some(c => c === i.port)) {
+      //     acc[i.origin].push(i.port);
+      //     return acc;
+      //   } else {
+      //     return acc;
+      //   }
+      // }, {});
+
+      // console.log(countriesByPorts);
+
     }));
 
-  }
-
-  makrSelected(shownItems, selected) {
-    if(shownItems.length) {
-      shownItems.forEach( (item: ItemUI, index) => {
-        if (selected.some(s => s.number === item.number)) {
-          this.items[index] = { ...this.items[index], selected: true };
-        } else {
-          this.items[index] = { ...this.items[index], selected: false };
-        }
-        this.cd.detectChanges();
-      });
-    }
   }
 
   ngOnDestroy() {

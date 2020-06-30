@@ -22,11 +22,11 @@ export class ItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onChangeCheckbox(event: MatCheckboxChange) {
-    if (event.checked) {
-      this.addItem();  
-    } else {
+  addItemByClick() {
+    if (this.item.selected) {
       this.removeItem();
+    } else {
+      this.addItem();
     }
   }
 

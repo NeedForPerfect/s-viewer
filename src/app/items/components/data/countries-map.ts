@@ -1,0 +1,23 @@
+export enum Countries {
+ COLOMBIA = 'CO',
+ GUATEMALA = 'GT',
+ VIETNAM = 'VN',
+ LAOS = 'LA',
+ PERU = 'PE',
+ UGANDA = 'UG',
+ MEXICO = 'MX',
+ OS_BRAZIL = 'BR',
+ ETHIOPIA = 'ET',
+ BURUNDI = 'BI',
+ HONDURAS = 'HN',
+ BRAZIL = 'BR',
+ NICARAGUA = 'NI',
+ INDIA = 'IN',
+ CAMEROON = 'CM',
+ RWANDA = 'RW',
+ 'PAPUA NEW GUINEA' = 'PG',
+ INDONESIA = 'ID',
+ CONGO = 'CD',
+ TANZANIA = 'TZ',
+ ZAMBIA = 'ZM'
+}

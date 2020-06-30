@@ -6,9 +6,10 @@ import { Subscription, Subject, combineLatest } from 'rxjs';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4maps from "@amcharts/amcharts4/maps";
-import * as worldHigh from "@amcharts/amcharts4-geodata/worldHigh"
+import * as worldHigh from "@amcharts/amcharts4-geodata/worldHigh";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { map, filter } from 'rxjs/operators';
+import { Countries } from '../data/countries-map';
 am4core.useTheme(am4themes_animated);
 
 export interface PieChartData {
@@ -26,6 +27,7 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
   selectedItems: ItemUI[];
   subscribtions = new Subscription();
   chartUnabled = new Subject();
+  mapChartData = null;
 
   private chart: am4charts.PieChart;
   @ViewChild('chartViewPort') chartViewPort: ElementRef;
@@ -46,7 +48,6 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
   ngAfterViewInit() {
     this.zone.runOutsideAngular(() => {
 
-      this.initMapChart();
 
       let chart = am4core.create(this.chartViewPort.nativeElement, am4charts.PieChart);
       // Add data
@@ -77,19 +78,44 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
   subscribeChartData() {
     this.subscribtions.add(combineLatest(this.chartUnabled, this.store).pipe(filter(val => !!val[0]), map((val: any) => val[1])).subscribe(({ itemsState }: { itemsState: ItemsState }) => {
       this.selectedItems = itemsState.selectedItems;
+      this.prepareDataForMapChart();
+      if (this.mapChartData) {
+        this.initMapChart();
+      }
       this.chart.data = this.selectedItems.reduce((acc: PieChartData[], curr: ItemUI) => {
-        let existedCountryIndex = acc.findIndex(a => a.country.trim().toLocaleLowerCase() === curr.origin.trim().toLocaleLowerCase());
-        console.log(existedCountryIndex);
+        let existedCountryIndex = acc.findIndex(a => a.country.trim().toLocaleLowerCase() === curr.originShort.trim().toLocaleLowerCase());
         if (existedCountryIndex !== -1) {
           let existedCountry = acc[existedCountryIndex];
           acc[existedCountryIndex] = { ...existedCountry, T: +existedCountry.T + +curr.netWeightLBS };
           return acc;
         } else {
-          return [...acc, { T: curr.netWeightLBS, country: curr.origin }];
+          return [...acc, { T: curr.netWeightLBS, country: curr.originShort }];
         }
       }, []);
       this.cd.detectChanges();
     }));
+  }
+
+  prepareDataForMapChart() {
+    this.mapChartData =
+      this.selectedItems.reduce((acc: { [key: string]: { portName: string, T: number }[] }, i: ItemUI) => {
+        const shortOrigin = Countries[i.origin];
+        if (!acc[shortOrigin]) {
+          return { ...acc, [shortOrigin]: [{ portName: i.port, T: +i.netWeightLBS }] };
+        } else if (!acc[shortOrigin].some(c => c.portName === i.port)) {
+          // If port dont Exists;
+          acc[shortOrigin].push({ portName: i.port, T: +i.netWeightLBS });
+          return acc;
+        } else if (acc[shortOrigin].some(c => c.portName === i.port)) {
+          // If port Exists;
+          const existedPort = acc[shortOrigin].find((p => p.portName === i.port));
+          existedPort.T = existedPort.T + +i.netWeightLBS;
+          return acc
+        }
+        else {
+          return acc;
+        }
+      }, {});
   }
 
 
@@ -98,8 +124,9 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
     this.mapChart = am4core.create(this.mapChartViewPort.nativeElement, am4maps.MapChart);
 
     try {
+      const filteredCountries = worldHigh.default.features.filter( c => c.properties['name'] !== 'Antarctica' );
+      worldHigh.default.features = filteredCountries;
       this.mapChart.geodata = worldHigh.default;
-      console.log(this.mapChart.geodata);
     }
     catch (e) {
       this.mapChart.raiseCriticalError(new Error("Map geodata could not be loaded. Please download the latest <a href=\"https://www.amcharts.com/download/download-v4/\">amcharts geodata</a> and extract its contents into the same directory as your amCharts files."));
@@ -110,14 +137,15 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
     // zoomout on background click
     this.mapChart.chartContainer.background.events.on("hit", () => { this.zoomOut() });
 
-    var colorSet = new am4core.ColorSet();
     var morphedPolygon;
 
     // map polygon series (countries)
     var polygonSeries = this.mapChart.series.push(new am4maps.MapPolygonSeries());
     polygonSeries.useGeodata = true;
     // specify which countries to include
-    polygonSeries.include = ["IT", "CH", "FR", "DE", "GB", "ES"]
+
+    // Here We can show just need Countries
+    // polygonSeries.include = Object.keys(this.mapChartData).map( countryName => Countries[countryName] );
 
     // country area look and behavior
     var polygonTemplate = polygonSeries.mapPolygons.template;
@@ -132,8 +160,13 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
     polygonTemplate.filters.push(desaturateFilter);
 
     // take a color from color set
-    polygonTemplate.adapter.add("fill", function (fill, target) {
-      return colorSet.getIndex(target.dataItem.index + 1);
+    polygonTemplate.adapter.add("fill", (fill, target) => {
+      // console.log('fgh', target.dataItem.dataContext['id']);
+      if (target.dataItem.dataContext && Object.keys(this.mapChartData).some(countryName => countryName === target.dataItem.dataContext['id'])) {
+        return am4core.color('#30a2ff');
+      } else {
+        return am4core.color('#DDDDDD');
+      }
     })
 
     // set fillOpacity to 1 when hovered
@@ -143,7 +176,6 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
     // what to do when country is clicked
     polygonTemplate.events.on("hit", (event) => {
 
-      console.log('Event Click', event);
       event.target.zIndex = 1000000;
       this.selectPolygon(event.target);
     })
@@ -162,7 +194,7 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
     var pieSeries = pieChart.series.push(new am4charts.PieSeries());
     pieSeries.dataFields.value = "value";
     pieSeries.dataFields.category = "category";
-    pieSeries.data = [{ value: 100, category: "First port" }, { value: 20, category: "Second port" }, { value: 10, category: "Third port" }];
+    // pieSeries.data = [{ value: 100, category: "First port" }, { value: 20, category: "Second port" }, { value: 10, category: "Third port" }];
     this.mapPieChart = pieChart;
 
     var dropShadowFilter = new am4core.DropShadowFilter();
@@ -301,7 +333,6 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
   }
 
   zoomToCountry(polygon) {
-    console.log(polygon.dataItem.dataContext);
     var zoomAnimation = this.mapChart.zoomToMapObject(polygon, 2.2, true);
     if (zoomAnimation) {
       zoomAnimation.events.on("animationended", () => {
@@ -314,10 +345,20 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
   }
 
   showPieChart(polygon) {
-    console.log('Polygon', polygon);
+    if (!Object.keys(this.mapChartData).some(countryName => countryName === polygon.dataItem.dataContext.id)) {
+      return;
+    };
     polygon.polygon.measure();
     var radius = polygon.polygon.measuredWidth / 2 * polygon.globalScale / this.mapChart.seriesContainer.scale;
-    this.mapPieSeries.data = [{ value: 100, category: "First port" }, { value: 98, category: "SSSecond port" }, { value: 10, category: "Third port" }];
+    // this.mapPieSeries.data = [{ value: 100, category: "First port" }, { value: 98, category: "SSSecond port" }, { value: 10, category: "Third port" }];
+    this.mapPieSeries.data = this.mapChartData[polygon.dataItem.dataContext.id].map( port => ({
+      category: port.portName,
+      value: port.T
+    }));
+    this.mapPieSeries.labels.template.text = "{category} {value} T"
+    // Write method get data by unique country
+
+
     this.mapPieChart.width = radius * 2;
     this.mapPieChart.height = radius * 2;
     this.mapPieChart.radius = radius;
@@ -337,7 +378,7 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
       dataItem.slice.fill = am4core.color(am4core.colors.interpolate(
         fill.rgb,
         am4core.color("#ffffff").rgb,
-        0.2 * i
+        0.8 * i
       ));
 
       dataItem.label.background.fill = desaturated;

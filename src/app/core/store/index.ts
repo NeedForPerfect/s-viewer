@@ -2,6 +2,7 @@ import {
 	ApiGetItems,
 	ApiGetItemsSuccess,
 	SelectAddItem,
+	MultipleSelectAddItems,
 	SelectRemoveItem,
 	SelectClearSelected
 } from './actions';
@@ -13,6 +14,7 @@ export const rootStore = {
 	ApiGetItems,
 	ApiGetItemsSuccess,
 	SelectAddItem,
+	MultipleSelectAddItems,
 	SelectRemoveItem,
 	SelectClearSelected,
 	ItemsReducer,

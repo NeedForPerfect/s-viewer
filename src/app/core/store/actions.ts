@@ -9,7 +9,8 @@ import { ItemUI } from '../models/item.model';
 const API_GET_ITEMS = '[API_GET_ITEMS] GET items from an api';
 const API_GET_ITEMS_SUCCESS = '[API_GET_ITEMS_SUCCESS] GET items from an api SUCCESS';
 
-const SELECT_ADD_ITEM = '[SELECT_ADD_ITEM ] Select item for further calculating';
+const SELECT_ADD_ITEM = '[SELECT_ADD_ITEM] Select item for further calculating';
+const MULTIPLE_SELECT_ADD_ITEMS = '[MULTIPLE_SELECT_ADD_ITEMS] Select item for further calculating';
 const SELECT_REMOVE_ITEM = '[SELECT_REMOVE_ITEM] Remove item from selected list';
 const SELECT_CLEAR_SELECTED_LIST = '[SELECT_CLEAR_SELECTED_LIST] Clear selected list';
 
@@ -25,6 +26,9 @@ export function ApiGetItemsSuccess(): any { return _ApiGetItemsSuccess };
 
 export const _SelectAddItem = createAction(SELECT_ADD_ITEM,  props<{ item: ItemUI }>());
 export function SelectAddItem(): any { return _SelectAddItem; };
+
+export const _MultipleSelectAddItems = createAction(MULTIPLE_SELECT_ADD_ITEMS);
+export function MultipleSelectAddItems(): any { return _MultipleSelectAddItems; };
 
 export const _SelectRemoveItem = createAction(SELECT_REMOVE_ITEM,  props<{ item: ItemUI }>()); // need Id. GEt Data from DataBase
 export function SelectRemoveItem(): any { return _SelectRemoveItem; };
