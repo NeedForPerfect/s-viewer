@@ -15,10 +15,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ViewCalculatedDataBySelectedComponent } from './components/view-calculated-data-by-selected/view-calculated-data-by-selected.component';
 import {MatButtonModule} from '@angular/material/button';
+import * as echarts from 'echarts';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { SecondMapChartComponent } from './components/second-map-chart/second-map-chart.component';
 
 
 @NgModule({
-  declarations: [RootComponent, FilterComponent, ItemsViewerComponent, ItemComponent, ViewCalculatedDataBySelectedComponent],
+  declarations: [RootComponent, FilterComponent, ItemsViewerComponent, ItemComponent, ViewCalculatedDataBySelectedComponent, SecondMapChartComponent],
   imports: [
     CommonModule,
     ItemsRoutingModule,
@@ -29,7 +32,10 @@ import {MatButtonModule} from '@angular/material/button';
     MatSelectModule,
     ReactiveFormsModule,
     MatCheckboxModule,
-    MatButtonModule
+    MatButtonModule,
+    NgxEchartsModule.forRoot({
+      echarts
+    })
   ]
 })
 export class ItemsModule { }
