@@ -39,6 +39,8 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
   mapPolygonSeries;
   countryLabel;
 
+  dataForChinesChart;
+
   constructor(
     private store: Store<{ itemsState: ItemsState }>,
     private zone: NgZone,
@@ -116,6 +118,15 @@ export class ViewCalculatedDataBySelectedComponent implements OnInit {
           return acc;
         }
       }, {});
+      console.log('Map Chart Data', this.mapChartData);
+
+      this.dataForChinesChart = Object.keys(this.mapChartData).map( key => {
+        const value = this.mapChartData[key].reduce((acc, curr) => acc + +curr.T, 0);
+        return { name: key, value };
+      });
+
+      console.log(this.dataForChinesChart);
+
   }
 
 

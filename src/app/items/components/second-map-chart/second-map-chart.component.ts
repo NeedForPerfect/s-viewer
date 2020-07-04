@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import * as worldHigh from "@amcharts/amcharts4-geodata/worldHigh";
 import * as echarts from 'echarts';
 
@@ -9,6 +9,8 @@ import * as echarts from 'echarts';
 })
 export class SecondMapChartComponent implements OnInit {
 
+  @Input('data') data;
+
   options: any;
   constructor() { }
 
@@ -17,18 +19,19 @@ export class SecondMapChartComponent implements OnInit {
   }
 
   loadData() {
-    echarts.registerMap('USA', worldHigh.default, {
-      Alaska: {              // 把阿拉斯加移到美国主大陆左下方
+    console.log(worldHigh.default)
+    echarts.registerMap('WORLD', worldHigh.default, {
+      Alaska: {
         left: -131,
         top: 25,
         width: 15
       },
       Hawaii: {
-        left: -70,        // 夏威夷
+        left: -70,
         top: 28,
         width: 5
       },
-      'Puerto Rico': {       // 波多黎各
+      'Puerto Rico': {
         left: -76,
         top: 26,
         width: 2
@@ -37,7 +40,11 @@ export class SecondMapChartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-this.loadData();
+    this.loadData();
+  }
+
+  ngOnChanges() {
+    if (!this.data) { return; }
     this.options = {
       title: {
         text: 'USA Population Estimates (2012)',
@@ -63,7 +70,7 @@ this.loadData();
         inRange: {
           color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
         },
-        text: ['High', 'Low'],           // 文本，默认为数值文本
+        text: ['High', 'Low'],
         calculable: true
       },
       toolbox: {
@@ -83,17 +90,19 @@ this.loadData();
           name: 'USA PopEstimates',
           type: 'map',
           roam: true,
-          map: 'USA',
+          map: 'WORLD',
           emphasis: {
             label: {
               show: false
             }
           },
-          // 文本位置修正
           textFixed: {
-          
+
           },
           data: [
+            ...this.data,
+            { name: 'Czechia', value: 5000 },
+            { name: 'United States', value: 25000 }
           ]
         }
       ]
